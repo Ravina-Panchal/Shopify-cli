@@ -1,0 +1,359 @@
+{% comment %} {{ 'section-contact-form.css' | asset_url | stylesheet_tag }} {% endcomment %}
+<style>
+  .feedback-form .inputs-container {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    margin: 0 0 1.875rem;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .feedback-form .input-contents {
+    font-family: "Tajawal Bold";
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 1.875rem 0;
+    padding: 0;
+    font-size: .875rem;
+    color: #000;
+    position: relative;
+  }
+  .feedback-form .input-contents label{
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 0.625rem;
+    padding: 0;
+  }
+  .feedback-form .input-contents input{
+    font-family: "Tajawal Medium";
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    border-radius: 1.0625rem;
+    height: 2.8125rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0.625rem rgb(0 0 0 / 8%)
+  }
+  .feedback-form .multiple-inputs-wrapper {
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  .feedback-form .select-wrapper .input-small {
+    max-width: 7rem;
+    margin: 0 0.5rem 0 0;
+    text-align: left;
+  }
+  .feedback-form .select-wrapper {
+    font-family: "Tajawal Medium";
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    border-radius: 1.0625rem;
+    height: 2.8125rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0.625rem rgb(0 0 0 / 8%);
+  }
+  .feedback-form .input-contents select {
+    font-family: "Tajawal Medium";
+    -webkit-appearance: none;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    border: none;
+    margin: 0;
+    padding: 0.9375rem 1.25rem;
+    height: 2.8125rem;
+    z-index: 999;
+    background: none;
+  }
+  .feedback-form .input-contents .text-area {
+    font-family: "Tajawal Medium";
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    border-radius: 1.0625rem;
+    height: 2.8125rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 0.625rem rgb(0 0 0 / 8%);
+  }
+  .feedback-form .input-contents .select-wrapper::before {
+    content: "";
+     top: 0;
+    height: 2.8125rem;
+    width: 2.875rem;
+    -webkit-transform: translate(0, 0) rotate(0deg);
+    transform: translate(0, 0) rotate(0deg);
+    box-shadow: 0 0 0.625rem rgb(0 0 0 / 8%);
+    z-index: 1;
+    background: #fff;
+  }
+  .feedback-form .input-contents .select-wrapper::after {
+    content: "";
+    background: url(https://cdn.shopify.com/s/files/1/0604/1151/1030/files/sprite.svg?v=1654072666#right-arrow) no-repeat #fff;
+    position: absolute;
+    right: 0;
+    top: 52%;
+    -webkit-transform: translate(0, -50%) rotate(90deg);
+    transform: translate(0, -50%) rotate(90deg);
+    margin: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    box-shadow: 0 0 0.625rem rgb(0 0 0 / 8%);
+    border-radius: 1.0625rem;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .feedback-form button{
+    width: 100%;
+    max-width: 17.1875rem;
+    position: unset;
+    margin: 0.125rem auto 0.9375rem;
+    font-family: "Tajawal Bold";
+    font-size: 1rem;
+    text-transform: uppercase;
+    line-height: 1.25rem;
+    display: block;
+    padding: 0.65625rem 0.625rem;
+    background: #000;
+    color: #fff;
+    border: 2px solid #000;
+    border-top-left-radius: 2.5rem;
+    border-top-right-radius: 2.5rem;
+    border-bottom-left-radius: 2.5rem;
+    border-bottom-right-radius: 2.5rem;
+    min-height: 3rem;
+    min-width: 9.625rem;
+    transition: all 0.5s cubic-bezier(0.24, 0.5, 0.22, 0.89);
+    box-shadow: none !important;
+  }
+</style>
+
+<div class="feedback-form page-width page-width--narrow spaced-section">
+  <h2 class="title">{{ section.settings.heading | escape }}</h2>
+ <form id="FeedbackForm" method="post">
+    {%- if form.posted_successfully? -%}
+      <div class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon-success' %} {{ 'templates.contact.form.post_success' | t }}</div>
+    {%- elsif form.errors -%}
+      <div class="form__message">
+        <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>{% render 'icon-error' %} {{ 'templates.contact.form.error_heading' | t }}</h2>
+      </div>
+      <ul class="form-status-list caption-large" role="list">
+        <li>
+          <a href="#FeedbackForm-email" class="link">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </a>
+        </li>
+      </ul>
+    {%- endif -%}
+        <div class="inputs-container">
+          <div class="input-contents">
+            <label for="FeedbackForm-email"><span aria-hidden="true">Email*</span></label>
+            <input
+              autocomplete="email"
+              type="email"
+              id="FeedbackForm-email"
+              class="field__input"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="FeedbackForm-email-error"
+              {% endif %}
+            >
+        </div>
+        {%- if form.errors contains 'email' -%}
+          <small class="contact__field-error" id="FeedbackForm-email-error">
+            <span class="visually-hidden">{{ 'accessibility.error' | t }}</span>
+            <span class="form__message">{% render 'icon-error' %}{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}</span>
+          </small>
+        {%- endif -%}
+      </div>
+   
+    <div class="inputs-container" style="margin-bottom: 1rem;">
+      <div class="input-contents">
+        <label>Mobile Number*</label>
+        <div class="multiple-inputs-wrapper">
+          <div class="select-wrapper input-small">
+            <select onchange="handler();" id="FeedbackForm-phone-code" name="customer[note][country_phone_code]">
+              <option data-countrycode="SA" value="966" selected="">+966</option>
+              <optgroup label="Other countries">
+                <option data-countrycode="AE" value="971">+971</option>
+              </optgroup>
+            </select>
+          </div>
+
+          {% comment %} <input type="number" id="RegisterForm-phone" name=customer[note][phone_number] placeholder="Enter Mobile Number"> {% endcomment %}
+          <input onchange="handler();" type="tel" id="FeedbackForm-phone" name="customer[note][phone_number]" placeholder="Enter Mobile Number">
+
+          <!-- Invisible Input for Full. numebr -->
+          <input type="hidden" id="FeedbackForm-phone-full" name="customer[note][phone_number_full]">
+        </div>
+      </div>
+    </div>
+    <div class="inputs-container" style="margin-bottom: 1rem;">
+      <div class="input-contents">
+      <label for="FeedbackForm-body">Your Feedback</label>
+      <textarea
+        rows="10"
+        id="FeedbackForm-body"
+        class="text-area field__input"
+        name="contact[{{ 'templates.contact.form.comment' | t }}]"
+        placeholder="{{ 'templates.contact.form.comment' | t }}"
+      >
+        {{- form.body -}}
+      </textarea>
+      </div>
+    </div>
+    <div class="FeedbackForm__button">
+      <button type="submit" class="button">
+        {{ 'templates.contact.form.send' | t }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="inputs-container" style="margin-bottom: 1rem;">
+              <div class="input-contents">
+                <label>Mobile Number*</label>
+                <div class="multiple-inputs-wrapper">
+                  <div class="select-wrapper input-small">
+                    <select onchange="handler();" id="RegisterForm-phone-code" name="customer[note][country_phone_code]">
+                      <option data-countrycode="SA" value="966" selected="">+966</option>
+                      <optgroup label="Other countries">
+                        <option data-countrycode="AE" value="971">+971</option>
+                      </optgroup>
+                    </select>
+                  </div>
+
+                  {% comment %} <input type="number" id="RegisterForm-phone" name=customer[note][phone_number] placeholder="Enter Mobile Number"> {% endcomment %}
+                  <input onchange="handler();" type="tel" id="RegisterForm-phone" name="customer[note][phone_number]" placeholder="Enter Mobile Number">
+
+                  <!-- Invisible Input for Full. numebr -->
+                  <input type="hidden" id="RegisterForm-phone-full" name="customer[note][phone_number_full]">
+
+                </div>
+                <div class="send-mobile-otp-btn"></div>
+              </div>
+              <div class="input-contents custom-modified-input">
+                <label>Verification Code</label>
+                <div class='mobile-otp-box'>
+
+                </div>
+              </div>
+<script>
+  function handler() {
+    var countryCodeElement = document.getElementById('RegisterForm-phone-code');
+    var countryCode = countryCodeElement.options[countryCodeElement.selectedIndex].value;
+    var number = document.getElementById('RegisterForm-phone').value;
+    var fullNumber = document.getElementById('RegisterForm-phone-full');
+
+    fullNumber.value = countryCode + "" + number;
+  }
+</script>
+
+
+<script>
+// $(function() {
+//   $('#FeedbackForm').submit(function(event) {
+//     event.preventDefault(); // Prevent the form from submitting normally
+
+//     let feedbackEmail = $('#FeedbackForm-email').val();
+//     let feedbackPhone = $('#FeedbackForm-phone').val();
+//     let feedbackMessage = $('#FeedbackForm-body').val();
+
+//     // Check if email is valid
+//     if (!validateEmail(email)) {
+//       alert('Please enter a valid email address.');
+//       return false;
+//     }
+
+//     // Check if phone is valid
+//     if (!validatePhone(phone)) {
+//       alert('Please enter a valid phone number.');
+//       return false;
+//     }
+
+//     // Make an AJAX request to submit the form data
+//     $.ajax({
+//       url: $(this).attr('action'),
+//       type: 'post',
+//       data: {
+//         email: feedbackEmail,
+//         phone: feedbackPhone,
+//         message: feedbackMessage
+//       },
+//       success: function() {
+//         // Display the thank you message and hide the form
+//         $('#feedback-form').hide();
+//         $('#thank-you').show();
+//       }
+//     });
+//   });
+
+//   // Function to validate email address
+//   function validateEmail(email) {
+//     var re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+//     return re.test(email);
+//   }
+
+//   // Function to validate phone number
+//   function validatePhone(phone) {
+//     var re = /^\+971\d{9}$/; // Replace +971 with the country code for Arabic countries
+//     return re.test(phone);
+//   }
+// });
+</script>
+
+
+{% schema %}
+{
+  "name": "Feedback form",
+  "tag": "section",
+  "class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Contact form",
+      "label": "Heading"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feedback form"
+    }
+  ]
+}
+{% endschema %}

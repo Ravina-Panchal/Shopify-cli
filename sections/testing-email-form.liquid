@@ -1,0 +1,327 @@
+{{ 'testing-email.css' | asset_url | stylesheet_tag }}tt
+
+
+<modal-dialog id="BusinessSearchProductModal" class="visit-modal">
+    <div role="dialog" aria-modal="true" class="visit-modal__wrapper flex align-center justify-center" tabindex="-1">
+        <div class="visit-modal__content business-searchproduct__content">
+            <div class="flex business-searchproduct__content--header">
+                <a href="{{ routes.root_url }}"
+                    class="header__heading-link link link--text focus-inset  business-searchproduct__content--logo">
+                    {%- if section.settings.logo != blank -%}
+                    {%- assign logo_alt = section.settings.logo.alt | default: shop.name | escape -%}
+                    {%- assign logo_height = section.settings.logo_width | divided_by:
+                    section.settings.logo.aspect_ratio -%}
+                    {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag:
+                    class: 'header__heading-logo',
+                    widths: '50, 100, 150, 200, 250, 300, 400, 500',
+                    height: logo_height,
+                    width: section.settings.logo_width,
+                    alt: logo_alt
+                    }}
+                    {%- else -%}
+                    <span class="h2">{{ shop.name }}</span>
+                    {%- endif -%}
+                </a>
+                <button id="ModalClose-BusinessSearchProduct" type="button" class="visit-modal__toggle"
+                    aria-label="{{ 'accessibility.close' | t }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16.642" height="16.642" viewBox="0 0 16.642 16.642">
+                        <g id="Group_205317" data-name="Group 205317" transform="translate(8.321 -5.493) rotate(45)">
+                            <line id="Line_53107" data-name="Line 53107" y2="19.536" transform="translate(9.768 0)"
+                                fill="none" stroke="#111314" stroke-linecap="round" stroke-width="2" />
+                            <line id="Line_53108" data-name="Line 53108" x2="19.536" transform="translate(0 9.768)"
+                                fill="none" stroke="#111314" stroke-linecap="round" stroke-width="2" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            {%- form 'contact', id: 'ContactForm', class: 'visit-modal__form isolate business-searchproduct__form' -%}
+            {%- if form.posted_successfully? -%}
+            <h2 class="form-status form-status-list form__message" tabindex="-1" autofocus>{% render 'icon' with
+                'success' %} {{ 'templates.contact.form.post_success' | t }}</h2>
+            {%- elsif form.errors -%}
+            <div class="form__message">
+                <h2 class="form-status caption-large text-body" role="alert" tabindex="-1" autofocus>{%- render
+                    'icon' with 'error' -%} {{ 'templates.contact.form.error_heading' | t }}</h2>
+            </div>
+            <ul class="form-status-list caption-large" role="list">
+                <li>
+                    <a href="#ContactForm-email" class="link">
+                        {{ form.errors.translated_fields['email'] | capitalize }} {{
+                        form.errors.messages['email'] }}
+                    </a>
+                </li>
+            </ul>
+            {%- endif -%}
+
+            <div id="BusinessWithUsStep-1" class="business-searchproduct__info is-active">
+                <div class="business-searchproduct__item--content">
+
+                    {%- if section.settings.caption != blank -%}
+                    <div class="business-searchproduct__caption center caption {{ section.settings.caption_type }}">
+                        {{ section.settings.caption }}
+                    </div>
+                    {%- endif -%}
+
+
+                    <input type="hidden" name="contact[Source]" value="Business with us">
+                    <div class="business-searchproduct__text">
+                        <p>What are Looking for ?</p>
+                    </div>
+
+                    <div class="business-searchproduct__form-field flex align-center">
+
+                        <div class="visit-modal__form-fielditem flex align-center business-searchproduct__form-fielditem ">
+                            <input class="business-checkbox-icon" type="radio"
+                                id="ContactForm-Interested-In-WhiteLabeling" name="contact[Interested-In]"
+                                value="White Labeling" checked>
+                            <label for="ContactForm-Interested-In-WhiteLabeling">White Labeling</label>
+                        </div>
+                        <div class="visit-modal__form-fielditem flex align-center business-searchproduct__form-fielditem">
+                            <input class="business-checkbox-icon" type="radio"
+                                id="ContactForm-Interested-In-BulkOrders" name="contact[Interested-In]"
+                                value="Bulk Orders">
+                            <label for="ContactForm-Interested-In-BulkOrders">Bulk Orders</label>
+                        </div>
+                    </div>
+
+                    <div class="business-searchproduct__form-field flex align-center">
+                        <div class="visit-modal__form-fielditem flex align-center business-searchproduct__form-fielditem">
+                            <input class="business-checkbox-icon" type="radio"
+                                id="ContactForm-Interested-In-GetDealership" name="contact[Interested-In]"
+                                value="Get Dealership">
+                            <label for="ContactForm-Interested-In-GetDealership">Get Dealership</label>
+                        </div>
+                        <div class="visit-modal__form-fielditem flex align-center business-searchproduct__form-fielditem">
+                            <input class="business-checkbox-icon" type="radio"
+                                id="ContactForm-Interested-In-BecomeRetailer" name="contact[Interested-In]"
+                                value="Become A Retailer">
+                            <label for="ContactForm-Interested-In-BecomeRetailer">Become A Retailer</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="center">
+                    <div class="visit-modal__form-button business-searchproduct__form-button">
+                        <div class="button button--primary">Proceed</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div id="BusinessWithUsStep-2" class="hidden">
+                <div role="dialog" aria-modal="true" class="visit-modal__wrapper flex align-center justify-center" tabindex="-1">
+                    <div class="visit-modal__content business-searchproduct__content">
+                        <div class="business-searchproduct__info">
+                            <div class="business-searchproduct__item--content">
+
+                                {%- if section.settings.caption != blank -%}
+                                <div
+                                    class="business-searchproduct__caption center caption {{ section.settings.caption_type }}">
+                                    {{ section.settings.caption }}
+                                </div>
+                                {%- endif -%}
+
+                                <div class="business-form--wrapper">
+
+                                    <input type="hidden" name="contact[Source]" value="Business with us">
+                                    <details class="business-searchproduct__textfield">
+                                        <summary>
+                                            <div class="flex justify-between align-center">
+                                                <p>Select the products you are interested in</p>
+                                                <span class="business-searchproduct__text--icon">
+                                                    <svg width="9" height="5" viewBox="0 0 9 5" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M4.33013 4.5L0 0H8.66026L4.33013 4.5Z"
+                                                            fill="#ACB5C2" />
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                        </summary>
+
+                                        <div class="business-searchproduct__text--optionsbox flex">
+                                          {% for block in section.blocks %}
+                                            <div class="business__option-wrapper">
+                                                <input class="business-product-checkbox-icon" type="checkbox"
+                                                        id="check-{{ block.id }}" name="contact[Interested-Category]"
+                                                        value="{{ block.settings.select_option }}">
+                                                <label class="business-searchproduct__text--option center" for="check-{{ block.id }}">{{ block.settings.select_option }}</label>
+                                                <svg class="business-option_svg hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                                                  <g id="Group_207406" data-name="Group 207406" transform="translate(-31 -290)">
+                                                    <circle id="Ellipse_4297" data-name="Ellipse 4297" cx="9" cy="9" r="9" transform="translate(31 290)" fill="#488013"/>
+                                                    <path id="Path_301696" data-name="Path 301696" d="M72.707,2376.79a1.007,1.007,0,0,1,0,1.42l-5,5a1.011,1.011,0,0,1-1.257.13,1.158,1.158,0,0,1-.157-.13l-3-3a1,1,0,0,1,1.414-1.42l2.293,2.3,4.293-4.3A1,1,0,0,1,72.707,2376.79Z" transform="translate(-28 -2080.999)" fill="#fff"/>
+                                                  </g>
+                                                </svg>
+                                              </div>
+                                           {% endfor %}
+                                        </div>
+                                    </details>
+
+                                    <div class="business-searchproduct__inputfields flex justify-between">
+                                        <div class="visit-modal__form-field field">
+                                            <input required class="field__input business-field__input"
+                                                autocomplete="first-name" type="text" id="ContactForm-FirstName"
+                                                name="contact[{{ 'templates.contact.form.first-name' | t }}]"
+                                                value="{% if form.first-name %}{{ form.first-name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                                                placeholder="{{ 'templates.contact.form.first-name' | t }}">
+                                            <label class="field__label" for="ContactForm-FirstName">{{
+                                                'templates.contact.form.first-name' | t }}</label>
+                                        </div>
+                                        <div class="visit-modal__form-field field">
+                                            <input required class="field__input business-field__input"
+                                                autocomplete="last-name" type="text" id="ContactForm-LastName"
+                                                name="contact[{{ 'templates.contact.form.last-name' | t }}]"
+                                                value="{% if form.last-name %}{{ form.last-name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+                                                placeholder="{{ 'templates.contact.form.last-name' | t }}">
+                                            <label class="field__label" for="ContactForm-LastName">{{
+                                                'templates.contact.form.last-name' | t }}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="business-searchproduct__inputfields flex justify-between">
+                                        <div class="visit-modal__form-field field">
+                                            <input required type="tel" id="ContactForm-phone"
+                                                class="field__input business-field__input" autocomplete="tel"
+                                                name="contact[{{ 'templates.contact.form.phone' | t }}]"
+                                                pattern="[0-9\-]*"
+                                                value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                                                placeholder="{{ 'templates.contact.form.phone' | t }}">
+                                            <label class="field__label" for="ContactForm-phone">{{
+                                                'templates.contact.form.phone' | t }}</label>
+                                        </div>
+
+                                        <div class="visit-modal__form-field field">
+                                            <input required autocomplete="email" type="email" id="ContactForm-email"
+                                                class="field__input business-field__input" name="contact[email]"
+                                                spellcheck="false" autocapitalize="off"
+                                                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                                                aria-required="true"
+                                                placeholder="{{ 'templates.contact.form.email' | t }}">
+                                            <label class="field__label" for="ContactForm-email">{{
+                                                'templates.contact.form.email' | t }}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="business-searchproduct__inputfields flex justify-between">
+                                        <div class="visit-modal__form-field field">
+                                            <input required class="field__input business-field__input"
+                                                autocomplete="company" type="text" id="ContactForm-company"
+                                                name="contact[{{ 'templates.contact.form.company' | t }}]"
+                                                value="{% if form.company %}{{ form.company }}{% elsif customer %}{{ customer.company }}{% endif %}"
+                                                placeholder="{{ 'templates.contact.form.company' | t }}">
+                                            <label class="field__label" for="ContactForm-company">{{
+                                                'templates.contact.form.company' | t }}</label>
+                                        </div>
+                                        <div class="visit-modal__form-field field">
+                                            <input required class="field__input business-field__input"
+                                                autocomplete="last-name" type="text" id="ContactForm-location"
+                                                name="contact[{{ 'templates.contact.form.location' | t }}]"
+                                                value="{% if form.location %}{{ form.location }}{% elsif customer %}{{ customer.location }}{% endif %}"
+                                                placeholder="{{ 'templates.contact.form.location' | t }}">
+                                            <label class="field__label" for="ContactForm-location">{{
+                                                'templates.contact.form.location' | t }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="visit-modal__form-field field">
+                                        <input required class="field__input comment_box" autocomplete="comment"
+                                            type="text-area" rows="5" cols="33" id="ContactForm-comment"
+                                            name="contact[{{ 'templates.contact.form.comment' | t }}]"
+                                            value="{% if form.comment %}{{ form.comment }}{% elsif customer %}{{ customer.comment }}{% endif %}"
+                                            placeholder="{{ 'templates.contact.form.comment' | t }}">
+                                        <label class="field__label" for="ContactForm-comment">Write a note</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="visit-modal__form-button business-searchproduct__form-submitbutton center">
+                    <button type="submit" class="button">SUBMIT</button>
+                </div>
+            </div>
+            {%- endform -%}
+        </div>
+    </div>
+</modal-dialog>
+
+<script>
+  document.querySelector('.business-searchproduct__form-button').addEventListener('click', displayModal);
+
+  function displayModal() {
+    document.getElementById('BusinessWithUsStep-2').classList.remove("hidden");
+    document.getElementById('BusinessWithUsStep-1').classList.add("hidden");
+  }
+
+ document.getElementById('ModalClose-BusinessSearchProduct').addEventListener('click', closeModal); 
+  function closeModal(){
+    document.getElementById('BusinessWithUsStep-2').classList.add("hidden");
+     document.getElementById('BusinessWithUsStep-1').classList.remove("hidden");
+  }
+</script>
+                                                        
+                                                          
+
+{% schema %}
+{
+  "name": "Business search modal",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:sections.header.settings.logo.label",
+      "info":"600x400 png recommended"
+    },
+    {
+      "type": "header",
+      "content": "Content settings"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption",
+      "default": "EXPLORE THE MAPRO PRODUCTS FOR YOU"
+    },
+    {
+      "type": "select",
+      "id": "caption_type",
+      "options": [
+        {
+          "value": "caption--red",
+          "label": "Red"
+        },
+        {
+          "value": "caption--blue",
+          "label": "Blue"
+        },
+        {
+          "value": "caption--green",
+          "label": "Green"
+        }
+      ],
+      "default": "caption--green",
+      "label": "Caption style"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "options",
+      "name": "Options",
+      "settings": [
+        {
+          "type": "text",
+          "id": "select_option",
+          "label": "Option",
+          "default": "Jams"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
